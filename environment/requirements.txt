@@ -1,3 +1,7 @@
+cython
+numpy
 rasterio==1.3.9
 geopandas==0.13.2
 xarray==2023.1.0
+gdal== 3.4.3
+git+https://github.com/jgrss/geowombat

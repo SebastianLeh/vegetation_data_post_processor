@@ -1,13 +1,30 @@
 
-# FORCE_GRID_SPATIAL_DATA_AGGREGATION
-
-
+# Vegetation Data Post-Processor
 
 ## Description
 
-"The FORCE_GRID_SPATIAL_DATA_AGGREGATION contains functions to aggregate geospatial data to a lower resolution Grid. We use the functionalities to aggregate raster or vector data of different environmental indicators to the [FORCE Grid](https://force-eo.readthedocs.io/en/latest/howto/datacube.html) at 10m resolution to facilitate usage in Sentinel-2 based machine learning models. Aggregation functions include e.g. Mean, Standard Deviation and Sum. 
+A toolkit for transforming, aggregating, and upscaling various types of vegetation data. Currently used to transform CNN 
+derived canopy height predictions into green volume and upscale them to [FORCE Datacube Grid](https://force-eo.readthedocs.io/en/latest/howto/datacube.html) for further use in satellite deep learning models.
 
-Additionally, some functionality for high resolution raster transformation is included. For our projects, we for example transform high resolution canopy height rasters to green volume (applying some rules based transformations) and into binary canopy rasters (using a specified threshold value). These are then upscaled to the 10*10m FORCE Grid using various aggregation statistics such as mean, sum and standard deviation." 
+## Key Functionalities:
+
+### 1. High-Resolution Data Transformation 
+- **Input**: High-resolution canopy height data from CNN predictions
+- **Outputs**: Green volume data, binary canopy data (>2.5m = canopy), original canopy height data
+- **Code**: canopy_height_upscaling.py
+
+### 2. Data Aggregation to FORCE Grid 
+- **Input**: Three raster products from step 1
+- **Output**: For each input, mean, SD, and sum per 10m pixel aligned to FORCE Grid
+- **Code**: canopy_height_upscaling.py
+
+### 3. Flexible Upscaling (e.g., Damage Analysis)
+- **Input**: Vector data on damaged vegetation
+- **Output**: Raster data of vegetation damage at 10m resolution, FORCE grid-aligned
+- **Code**: vector_to_raster_damage_analysis.py
+
+This versatile toolkit handles data type transformations and resolution changes for various ecological and forestry applications.
+
 
 
 ## Getting Started

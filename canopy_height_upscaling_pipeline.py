@@ -12,7 +12,7 @@ from core_functions import sum_aggregate_raster_10m_force, average_aggregate_ras
 ########################################## Configuration
 # list of city names
 city = [
-        'test_city'
+        'Berlin'
         ]
 
 # list of corresponding years       
@@ -22,19 +22,19 @@ year = [
 
 # list of corresponding vegetation height raster paths       
 veg_height_raster = [
-                    r'PATH\TO\canopy_height.tif'
+                    r'PATH\TO\veg_height.tif'
                      ]
 
 # Switches - which functionalities should be run
 veg_h_aggregate = True #set veg_h values < 0 to 0 and and aggregate to 10m average height
 veg_h_aggregate_SD = True
-gv = True # Set to True if you want to perform the transform_to_gv function and the associated aggregation to 10m - all negative values will be set to 0 
+gv = True # Set to True if you want to perform the transform_to_gv function and the associated aggregation to 10m - all negative values will be set to 0
 canopy = True # Set to True if you want to perform the transform_to_canopy_cover function and the associated aggregation to 10m
 
 
 # advanced config - location of FORCE 10m raster for germany, canopy threshold and xarray chunksize
 force_germany_bounds = (4016026.363042, 2654919.607965, 4676026.363042001, 3554919.607965) #bound of FORCE GRID for Germany for EPSG:3035 - needs to be expanded if working outside germany 
-canopy_threshold = 2.5 #vegetation height cutoff for being considered as canopy 
+canopy_threshold = 2.5 #vegetation height cutoff for being considered as canopy
 chunksize = 512 #chunksize for geowombat export - may need to be decreased for small images to avoid RasterBlockError
 
 ######################################### loop over Datasets in Main Function
