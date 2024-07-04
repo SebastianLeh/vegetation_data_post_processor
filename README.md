@@ -13,6 +13,7 @@ derived canopy height predictions into green volume and upscale them to [FORCE D
 - **Outputs**: Green volume data, binary canopy data (>2.5m = canopy), original canopy height data
 - **Code**: canopy_height_upscaling.py
 
+
 ### 2. Data Aggregation to FORCE Grid 
 - **Input**: Three raster products from step 1
 - **Output**: For each input, mean, SD, and sum per 10m pixel aligned to FORCE Grid
@@ -25,7 +26,18 @@ derived canopy height predictions into green volume and upscale them to [FORCE D
 
 This versatile toolkit handles data type transformations and resolution changes for various ecological and forestry applications.
 
+## Green Volume calculation
+The following table describes how green volume data is derived from the canopy height prediction. The constants for sealed surface, grassland and cropland in m³/m² are the same in m for the CNN based vegetation height predictions.
+The constants of 10 % and 25 % substracted for high vegetation represent estimations of missing vegetation volume around tree stems. 
 
+| Land Cover Type | Green Volume |
+|-----------------|--------------|
+| Sealed surface & Water | 0 m³/m² |
+| Grassland | 0.5 m³/m² |
+| Cropland | 1.0 m³/m² |
+| Shrubs (< 5m) | Pixelsize x canopy height |
+| Shrubs and Trees (5 - 7m) | Pixelsize x canopy height - 10% |
+| Trees (> 7m) | Pixelsize x canopy height - 25% |
 
 ## Getting Started
 
