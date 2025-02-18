@@ -30,6 +30,7 @@ veg_h_aggregate = True #set veg_h values < 0 to 0 and and aggregate to 10m avera
 veg_h_aggregate_SD = True
 gv = True # Set to True if you want to perform the transform_to_gv function and the associated aggregation to 10m - all negative values will be set to 0
 canopy = True # Set to True if you want to perform the transform_to_canopy_cover function and the associated aggregation to 10m
+only_upscale = False  # Set to True if you only want to apply upscaling without transformation
 
 
 # advanced config - location of FORCE 10m raster for germany, canopy threshold and xarray chunksize
@@ -57,7 +58,7 @@ def main():
         result_gv_10m_i = os.path.join(result_dir_i, f"{city_i}_{year_i}_green_volume_sum_10m_FORCE.tif")
 
         # Open vegetation height raster
-        veg_h, veg_h_attrs, veg_h_bounds, veg_h_nodata, veg_h_res = open_raster_get_FORCE_bounds(veg_height_raster_i, chunksize)
+        veg_h, veg_h_attrs, veg_h_bounds, veg_h_nodata, veg_h_res, processing_time = open_raster_get_FORCE_bounds(veg_height_raster_i, chunksize)
 
         # 10m aggregation bounding box
         adjusted_bbox = fit_box(force_germany_bounds, veg_h_bounds)
@@ -113,6 +114,13 @@ def main():
             print(f'exporting canopy raster for {city_i}...')
             export_raster(canopy_binary, veg_h_attrs, result_canopy_i, chunksize)
 
+            # Open canopy raster in 10m resolution with adjusted bounding box and export
+            canopy_aggregated, canopy_aggregated_attrs = average_aggregate_raster_10m_force(result_canopy_i, adjusted_bbox)
+            print(f'exporting aggregated canopy raster for {city_i}...')
+            export_raster(canopy_aggregated, canopy_aggregated_attrs, result_canopy_10m_i, chunksize)
+
+        if only_upscale:
+            print(f'Only upscaling mode enabled for {city_i}...')
             # Open canopy raster in 10m resolution with adjusted bounding box and export
             canopy_aggregated, canopy_aggregated_attrs = average_aggregate_raster_10m_force(result_canopy_i, adjusted_bbox)
             print(f'exporting aggregated canopy raster for {city_i}...')
